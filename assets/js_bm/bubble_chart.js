@@ -142,7 +142,16 @@ var agecatCenters = { // Center locations of the bubbles.
 
 // Vierter Button: Bildschirmzeit
     
-  var screentimeCenters = { // Center locations of the bubbles. 
+    var screentimeCenters = {  // X locations of the year titles.
+    'bis 1h': 40,
+    '1h bis 2h': 160,
+    '2h bis 3h': 330,
+    '3h bis 4h': 540,
+    '4h bis 5h': 730,
+    'mehr als 5h': 900
+  };
+    
+    var screentimeTitleX = { // Center locations of the bubbles. 
     'weniger als 1h': { x: 220, y: height / 2 },
     '1h-2h': { x: 320, y: height / 2 },
     '2h-3h': { x: 430, y: height / 2 },
@@ -150,14 +159,41 @@ var agecatCenters = { // Center locations of the bubbles.
     '4h-5h': { x: 670, y: height / 2 },
     'Mehr als 5h': { x: 770, y: height / 2 } 
   };
+    
+// Fünfter Button: Sorgenbarometer
 
-  var screentimeTitleX = {  // X locations of the year titles.
-    'bis 1h': 40,
-    '1h bis 2h': 160,
-    '2h bis 3h': 330,
-    '3h bis 4h': 540,
-    '4h bis 5h': 730,
-    'mehr als 5h': 900
+  var concernCenters = { // Center locations of the bubbles. 
+    '1': { x: 320, y: height / 2 },
+    '2': { x: 430, y: height / 2 },
+    '3': { x: 580, y: height / 2 },
+    '4': { x: 750, y: height / 2 }
+    
+   }; 
+    
+    var concernTitleX = {  // X locations of the year titles.
+    'stimmt ganz': 140,
+    'stimmt eher': 360,
+    'stimmt eher nicht': 630,
+    'stimmt nicht': 900,
+        
+  };
+    
+// Sechster Button: Daten an Website anvertrauen
+
+  var trustCenters = { // Center locations of the bubbles. 
+    '1': { x: 320, y: height / 2 },
+    '2': { x: 430, y: height / 2 },
+    '3': { x: 580, y: height / 2 },
+    '4': { x: 750, y: height / 2 }
+    
+   }; 
+    
+    var trustTitleX = {  // X locations of the year titles.
+    'stimmt ganz': 140,
+    'stimmt eher': 360,
+    'stimmt eher nicht': 630,
+    'stimmt nicht': 900,
+        
   };
     
 
@@ -228,7 +264,8 @@ var agecatCenters = { // Center locations of the bubbles.
           
         sex: d.geschlecht,
           
-       
+        concern: d.sorgenkat,
+        concerntext: d.sorgen,
         
         x: Math.random() * 900,
         y: Math.random() * 800
@@ -325,7 +362,7 @@ var agecatCenters = { // Center locations of the bubbles.
     hideAgecat();
     hideSex();
     hideScreentime();
-
+    hideConcern();
     
     force.on('tick', function (e) {
       bubbles.each(moveToCenter(e.alpha))
@@ -367,6 +404,7 @@ Die Positionierung basiert auf dem alpha Parameter des force layouts und wird kl
     hideAgecat();
     hideSex();
     hideScreentime();
+    hideConcern();
 
 
     force.on('tick', function (e) {
@@ -415,7 +453,7 @@ function moveToYear(alpha) {
     hideYear();
     hideSex();
     hideScreentime();
-
+    hideConcern();
 
     force.on('tick', function (e) {
       bubbles.each(moveToAgecat(e.alpha))
@@ -463,6 +501,7 @@ function moveToAgecat(alpha) {
     hideYear();
     hideAgecat();
     hideScreentime();
+    hideConcern();
 
 
     force.on('tick', function (e) {
@@ -506,11 +545,12 @@ function moveToAgecat(alpha) {
 //
 // -----------------------------------------------------------------*/
     
-  function splitBubblesintoScreentime() {
+   function splitBubblesintoScreentime() {
     showScreentime();
     hideYear();
     hideSex();
     hideAgecat();
+    hideConcern();
 
 
     force.on('tick', function (e) {
@@ -549,6 +589,108 @@ function moveToAgecat(alpha) {
     }    
 
   
+  
+  //* ------------------------------------------------------------------
+//  
+     //CONCERN / SORGEN
+//
+// -----------------------------------------------------------------*/
+    
+  function splitBubblesintoConcern() {
+    showConcern();
+    hideYear();
+    hideSex();
+    hideScreentime();
+    
+
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToConcern(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToConcern(alpha) {
+    return function (d) {
+      var target = concernCenters[d.concern];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideConcern() {
+    svg.selectAll('.concern').remove();
+  }
+
+  function showConcern() {
+
+    var concernData = d3.keys(concernTitleX);
+    var concern = svg.selectAll('.concern')
+      .data(concernData);
+
+    concern.enter().append('text')
+      .attr('class', 'concern')
+      .attr('x', function (d) { return concernTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+ }   
+  
+    
+    
+    
+    //* ------------------------------------------------------------------
+//  
+     //TRUST / VERTRAUEN
+//
+// -----------------------------------------------------------------*/
+    
+  function splitBubblesintoTrust() {
+    showTrust();
+    hideConcern();
+    hideYear();
+    hideSex();
+    hideScreentime();
+    
+
+
+    force.on('tick', function (e) {
+      bubbles.each(moveToTrust(e.alpha))
+        .attr('cx', function (d) { return d.x; })
+        .attr('cy', function (d) { return d.y; });
+    });
+
+    force.start();
+  }
+
+  function moveToTrust(alpha) {
+    return function (d) {
+      var target = TrustCenters[d.trust];
+      d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
+      d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
+    };
+  }
+
+  function hideTrust() {
+    svg.selectAll('.trust').remove();
+  }
+
+  function showTrust() {
+
+    var trustData = d3.keys(trustTitleX);
+    var trust = svg.selectAll('.trust')
+      .data(trustData);
+
+    trust.enter().append('text')
+      .attr('class', 'trust')
+      .attr('x', function (d) { return trustTitleX[d]; })
+      .attr('y', 65)
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return d; });
+ }   
     
     
 //* ------------------------------------------------------------------
@@ -576,6 +718,10 @@ function moveToAgecat(alpha) {
       splitBubblesintoSex();
     } else if (displayName === 'screentime') {
       splitBubblesintoScreentime();
+    } else if (displayName === 'concern') {
+      splitBubblesintoConcern();
+    } else if (displayName === 'trust') {
+      splitBubblesintoTrust();
     } else {
       groupBubbles();
     }
@@ -624,6 +770,19 @@ function moveToAgecat(alpha) {
                   '</span><br/>' +
                   '<span class="name">"Umfragejahr": </span><span class="value">' +
                   d.year +
+                 
+        
+                  '</span><br/>' +
+                  '<span class="name">"Ich mache mir Sorgen um meine Daten": </span><span class="value">' +
+                  d.concerntext +
+        
+                  
+                  '</span><br/>' +
+                  '<span class="name">"Ich vertraue einer Website schnell meine Daten an": </span><span class="value">' +
+                  d.trusttext +
+                  
+                  
+                  
                   '</span>';
     tooltip2.showtooltip2(content, d3.event);
   }
