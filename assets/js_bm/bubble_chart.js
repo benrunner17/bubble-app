@@ -117,7 +117,7 @@ var agecatCenters = { // Center locations of the bubbles.
     '16 - 17 Jahre': 400,
     '18 - 19 Jahre': 640,
     '20 - 29 Jahre': 800,
-    'Älter als 30 Jahre': 940,
+    'Älter als 30 Jahre': 940
   };
     
     
@@ -135,30 +135,33 @@ var agecatCenters = { // Center locations of the bubbles.
     'Männer': 200,
     'Frauen': 500,
     'Nichtbinär': 750,
-    'Keine Antwort': 920,
+    'Keine Antwort': 920
     
   };
 
 
 // Vierter Button: Bildschirmzeit
     
-    var screentimeCenters = {  // X locations of the year titles.
+    
+    var screentimeTitleX = {   
     'bis 1h': 40,
     '1h bis 2h': 160,
     '2h bis 3h': 330,
     '3h bis 4h': 540,
     '4h bis 5h': 730,
-    'mehr als 5h': 900,
+    'mehr als 5h': 900
   };
     
-    var screentimeTitleX = { // Center locations of the bubbles. 
+    
+    var screentimeCenters = {
     'weniger als 1h': { x: 220, y: height / 2 },
     '1h-2h': { x: 320, y: height / 2 },
     '2h-3h': { x: 430, y: height / 2 },
     '3h-4h': { x: 550, y: height / 2 },
     '4h-5h': { x: 670, y: height / 2 },
-    'Mehr als 5h': { x: 770, y: height / 2 }, 
+    'Mehr als 5h': { x: 770, y: height / 2 }
   };
+    
     
 // Fünfter Button: Sorgenbarometer
 
@@ -166,7 +169,7 @@ var agecatCenters = { // Center locations of the bubbles.
     '1': { x: 320, y: height / 2 },
     '2': { x: 430, y: height / 2 },
     '3': { x: 580, y: height / 2 },
-    '4': { x: 750, y: height / 2 },
+    '4': { x: 750, y: height / 2 }
     
    }; 
     
@@ -174,7 +177,7 @@ var agecatCenters = { // Center locations of the bubbles.
     'stimmt ganz': 140,
     'stimmt eher': 360,
     'stimmt eher nicht': 630,
-    'stimmt nicht': 900,
+    'stimmt nicht': 900
         
   };
     
@@ -182,13 +185,13 @@ var agecatCenters = { // Center locations of the bubbles.
 
   var whatsappCenters = { // Center locations of the bubbles. 
     '1': { x: 300, y: height / 1.8 },
-    '2': { x: 600, y: height / 1.8 },
+    '2': { x: 600, y: height / 1.8 }
     
    }; 
     
     var whatsappTitleX = {  // X locations of the year titles.
     'Ja': 280,
-    'Nein': 740,
+    'Nein': 740
         
   };
     
@@ -729,8 +732,6 @@ function moveToAgecat(alpha) {
       splitBubblesintoConcern();
     } else if (displayName === 'whatsapp') {
       splitBubblesintoWhatsapp();
-   
-    
     } else {
       groupBubbles();
     }
