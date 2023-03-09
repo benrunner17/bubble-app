@@ -789,7 +789,7 @@ function moveToAgecat(alpha) {
                   
                   '</span><br/>' +
                   '<span class="name">"Benutzen Sie Whatsapp?": </span><span class="value">' +
-                  d.whatsapptext +
+                  d.whatsapp +
                   
                   
                   
