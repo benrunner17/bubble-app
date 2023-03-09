@@ -23,7 +23,7 @@ var myBubbleChart = bubbleChart();
 /* Funktion display ruft die Bubble-Chart Funktion auf und stellt sie im #vis div dar. Wird nach dem laden der Daten aus dem CSV gecallt. */
 function display(error, data) {
   if (error) {
-    console.log(error);
+      console.log(error);
   }
   myBubbleChart('#vis', data);
 }
@@ -88,7 +88,7 @@ var yearCenters = { // Center locations of the bubbles.
     
     2021: { x: 280, y: height / 2 },
     2022: { x: 480, y: height / 2 },
-    2023: { x: 720, y: height / 2 }
+    2023: { x: 720, y: height / 2 },
     
   };
 
@@ -96,7 +96,7 @@ var yearCenters = { // Center locations of the bubbles.
     
     '2021': 180,
     '2022': 480,
-    '2023': 820
+    '2023': 820,
   };
     
 
@@ -108,7 +108,7 @@ var agecatCenters = { // Center locations of the bubbles.
     3: { x: 400, y: height / 1.9 },
     4: { x: 520, y: height / 2 },
     5: { x: 680, y: height / 2 },
-    6: { x: 810, y: height / 2 }
+    6: { x: 810, y: height / 2 },
   };
 
   var agecatTitleX = { // X locations of the year titles.
@@ -117,7 +117,7 @@ var agecatCenters = { // Center locations of the bubbles.
     '16 - 17 Jahre': 400,
     '18 - 19 Jahre': 640,
     '20 - 29 Jahre': 800,
-    'Älter als 30 Jahre': 940
+    'Älter als 30 Jahre': 940,
   };
     
     
@@ -127,7 +127,7 @@ var agecatCenters = { // Center locations of the bubbles.
     'Maennlich': { x: 330, y: height / 1.9  },
     'Weiblich': { x: 450, y: height / 1.9  },
     'Non-Binaer': { x: 600, y: height / 2  },
-    'Moechte nicht antworten': { x: 750, y: height / 2  }
+    'Moechte nicht antworten': { x: 750, y: height / 2  },
     
   };
 
@@ -135,7 +135,7 @@ var agecatCenters = { // Center locations of the bubbles.
     'Männer': 200,
     'Frauen': 500,
     'Nichtbinär': 750,
-    'Keine Antwort': 920
+    'Keine Antwort': 920,
     
   };
 
@@ -148,7 +148,7 @@ var agecatCenters = { // Center locations of the bubbles.
     '2h bis 3h': 330,
     '3h bis 4h': 540,
     '4h bis 5h': 730,
-    'mehr als 5h': 900
+    'mehr als 5h': 900,
   };
     
     var screentimeTitleX = { // Center locations of the bubbles. 
@@ -157,7 +157,7 @@ var agecatCenters = { // Center locations of the bubbles.
     '2h-3h': { x: 430, y: height / 2 },
     '3h-4h': { x: 550, y: height / 2 },
     '4h-5h': { x: 670, y: height / 2 },
-    'Mehr als 5h': { x: 770, y: height / 2 } 
+    'Mehr als 5h': { x: 770, y: height / 2 }, 
   };
     
 // Fünfter Button: Sorgenbarometer
@@ -166,7 +166,7 @@ var agecatCenters = { // Center locations of the bubbles.
     '1': { x: 320, y: height / 2 },
     '2': { x: 430, y: height / 2 },
     '3': { x: 580, y: height / 2 },
-    '4': { x: 750, y: height / 2 }
+    '4': { x: 750, y: height / 2 },
     
    }; 
     
@@ -178,21 +178,17 @@ var agecatCenters = { // Center locations of the bubbles.
         
   };
     
-// Sechster Button: Daten an Website anvertrauen
+// Sechster Button: WhatsApp
 
-  var trustCenters = { // Center locations of the bubbles. 
-    '1': { x: 320, y: height / 2 },
-    '2': { x: 430, y: height / 2 },
-    '3': { x: 580, y: height / 2 },
-    '4': { x: 750, y: height / 2 }
+  var whatsappCenters = { // Center locations of the bubbles. 
+    '1': { x: 300, y: height / 1.8 },
+    '2': { x: 600, y: height / 1.8 },
     
    }; 
     
-    var trustTitleX = {  // X locations of the year titles.
-    'stimmt ganz': 140,
-    'stimmt eher': 360,
-    'stimmt eher nicht': 630,
-    'stimmt nicht': 900,
+    var whatsappTitleX = {  // X locations of the year titles.
+    'Ja': 280,
+    'Nein': 740,
         
   };
     
@@ -267,8 +263,11 @@ var agecatCenters = { // Center locations of the bubbles.
         concern: d.sorgenkat,
         concerntext: d.sorgen,
         
+        whatsapp: d.whatsapp,
+      
+        
         x: Math.random() * 900,
-        y: Math.random() * 800
+        y: Math.random() * 800,
       };
     });
 
@@ -363,6 +362,7 @@ var agecatCenters = { // Center locations of the bubbles.
     hideSex();
     hideScreentime();
     hideConcern();
+    hideWhatsapp();
     
     force.on('tick', function (e) {
       bubbles.each(moveToCenter(e.alpha))
@@ -405,6 +405,7 @@ Die Positionierung basiert auf dem alpha Parameter des force layouts und wird kl
     hideSex();
     hideScreentime();
     hideConcern();
+    hideWhatsapp();
 
 
     force.on('tick', function (e) {
@@ -454,6 +455,7 @@ function moveToYear(alpha) {
     hideSex();
     hideScreentime();
     hideConcern();
+    hideWhatsapp();
 
     force.on('tick', function (e) {
       bubbles.each(moveToAgecat(e.alpha))
@@ -502,6 +504,7 @@ function moveToAgecat(alpha) {
     hideAgecat();
     hideScreentime();
     hideConcern();
+    hideWhatsapp();
 
 
     force.on('tick', function (e) {
@@ -551,6 +554,7 @@ function moveToAgecat(alpha) {
     hideSex();
     hideAgecat();
     hideConcern();
+    hideWhatsapp();
 
 
     force.on('tick', function (e) {
@@ -600,7 +604,9 @@ function moveToAgecat(alpha) {
     showConcern();
     hideYear();
     hideSex();
+    hideAgecat();
     hideScreentime();
+    hideWhatsapp();
     
 
 
@@ -644,21 +650,22 @@ function moveToAgecat(alpha) {
     
     //* ------------------------------------------------------------------
 //  
-     //TRUST / VERTRAUEN
+     //WHATSAPP / WHATSAPP
 //
 // -----------------------------------------------------------------*/
     
-  function splitBubblesintoTrust() {
-    showTrust();
+  function splitBubblesintoWhatsapp() {
+    showWhatsapp();
     hideConcern();
     hideYear();
     hideSex();
+    hideAgecat();
     hideScreentime();
     
 
 
     force.on('tick', function (e) {
-      bubbles.each(moveToTrust(e.alpha))
+      bubbles.each(moveToWhatsapp(e.alpha))
         .attr('cx', function (d) { return d.x; })
         .attr('cy', function (d) { return d.y; });
     });
@@ -666,27 +673,27 @@ function moveToAgecat(alpha) {
     force.start();
   }
 
-  function moveToTrust(alpha) {
+  function moveToWhatsapp(alpha) {
     return function (d) {
-      var target = TrustCenters[d.trust];
+      var target = whatsappCenters[d.whatsapp];
       d.x = d.x + (target.x - d.x) * damper * alpha * 1.1;
       d.y = d.y + (target.y - d.y) * damper * alpha * 1.1;
     };
   }
 
-  function hideTrust() {
-    svg.selectAll('.trust').remove();
+  function hideWhatsapp() {
+    svg.selectAll('.whatsapp').remove();
   }
 
-  function showTrust() {
+  function showWhatsapp() {
 
-    var trustData = d3.keys(trustTitleX);
-    var trust = svg.selectAll('.trust')
-      .data(trustData);
+    var whatsappData = d3.keys(whatsappTitleX);
+    var whatsapp = svg.selectAll('.whatsapp')
+      .data(whatsappData);
 
-    trust.enter().append('text')
-      .attr('class', 'trust')
-      .attr('x', function (d) { return trustTitleX[d]; })
+    whatsapp.enter().append('text')
+      .attr('class', 'whatsapp')
+      .attr('x', function (d) { return whatsappTitleX[d]; })
       .attr('y', 65)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
@@ -720,8 +727,10 @@ function moveToAgecat(alpha) {
       splitBubblesintoScreentime();
     } else if (displayName === 'concern') {
       splitBubblesintoConcern();
-    } else if (displayName === 'trust') {
-      splitBubblesintoTrust();
+    } else if (displayName === 'whatsapp') {
+      splitBubblesintoWhatsapp();
+   
+    
     } else {
       groupBubbles();
     }
@@ -778,8 +787,8 @@ function moveToAgecat(alpha) {
         
                   
                   '</span><br/>' +
-                  '<span class="name">"Ich vertraue einer Website schnell meine Daten an": </span><span class="value">' +
-                  d.trusttext +
+                  '<span class="name">"Benutzen Sie Whatsapp?": </span><span class="value">' +
+                  d.whatsapptext +
                   
                   
                   
